@@ -35,8 +35,11 @@ jobs:
             echo "::error::.env is tracked in git. Remove it and rotate the key."
             exit 1
           fi
-          if git grep -nIE '(sk-[A-Za-z0-9]{20,}|hooks\.zapier\.com/hooks/catch/[0-9]+/[A-Za-z0-9]+)' -- \
-              ':!*.example' ':!.env.example' ':!.github' 2>/dev/null | grep -v REPLACE_ME; then
+          # catches: OpenAI keys, GitHub classic + fine-grained tokens, live Zapier/Make hooks.
+          # The placeholder strings used in docs (ghp_xxx, REPLACE_ME) are excluded below.
+          if git grep -nIE '(sk-[A-Za-z0-9]{20,}|ghp_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{50,}|hooks\.zapier\.com/hooks/catch/[0-9]+/[A-Za-z0-9]+)' -- \
+              ':!*.example' ':!.env.example' ':!.github' 2>/dev/null \
+              | grep -vE 'REPLACE_ME|ghp_xxx|github_pat_xxx'; then
             echo "::error::Possible live API key or webhook URL committed."
             exit 1
           fi
