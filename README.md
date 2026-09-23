@@ -2,6 +2,14 @@
 A working lead-conversion agent for commercial insurance — built to be demoed today and sold next week.
 This is **Direction B**: build one useful agent, run it in your own business, then turn the working system into an offer.
 
+| | |
+|---|---|
+| **Repo** | https://github.com/askdave755-droid/insureflow-lead-agent *(private)* |
+| **Tests** | 15 / 15 passing — `npm test` |
+| **CI** | `.github/workflows/test.yml` runs on every push: tests, syntax check, agent-core markers, secret scan |
+| **Status** | Working demo · production server smoke-tested · schema reviewed, not yet load-tested |
+| **Publishing** | See `PUSH.md` before making this public — the sales script and pricing tiers are commercial advantage |
+
 ---
 
 ## Start here
