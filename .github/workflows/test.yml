@@ -1,0 +1,43 @@
+name: tests
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  agent-guardrails:
+    name: agent tests + guardrails
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Run the test suite
+        run: node --test tests/
+
+      - name: Syntax-check the server
+        run: node --check server-example.js
+
+      - name: Verify the agent core markers survived
+        run: |
+          grep -q "@agent-core:start" index.html
+          grep -q "@agent-core:end" index.html
+          echo "markers present"
+
+      - name: Guard against committed secrets
+        run: |
+          if git ls-files --error-unmatch .env >/dev/null 2>&1; then
+            echo "::error::.env is tracked in git. Remove it and rotate the key."
+            exit 1
+          fi
+          if git grep -nIE '(sk-[A-Za-z0-9]{20,}|hooks\.zapier\.com/hooks/catch/[0-9]+/[A-Za-z0-9]+)' -- \
+              ':!*.example' ':!.env.example' ':!.github' 2>/dev/null | grep -v REPLACE_ME; then
+            echo "::error::Possible live API key or webhook URL committed."
+            exit 1
+          fi
+          echo "no secrets detected"

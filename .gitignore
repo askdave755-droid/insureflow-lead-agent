@@ -1,0 +1,28 @@
+# Secrets — never commit these
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Dependencies / build output
+node_modules/
+dist/
+build/
+coverage/
+*.log
+npm-debug.log*
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Client data must never enter this repo.
+# Real lead exports, transcripts, customer names, live webhook URLs.
+leads*.csv
+transcripts/
+client-data/
+*.webhook

@@ -1,0 +1,24 @@
+{
+  "name": "insureflow-lead-agent",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lead conversion agent for commercial insurance — qualify, capture, route, and never quote. Single-file demo UI + zero-dependency Node server + consent-guarded CRM schema.",
+  "license": "MIT",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test tests/",
+    "start": "node server-example.js",
+    "dev": "node server-example.js"
+  },
+  "keywords": [
+    "ai-agent",
+    "lead-conversion",
+    "commercial-insurance",
+    "chatbot",
+    "llm-tools",
+    "crm-automation"
+  ]
+}
